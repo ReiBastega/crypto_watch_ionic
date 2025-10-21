@@ -35,4 +35,30 @@ export class ProdutosService {
 
     ];
   }
+
+  buscarBebidas(): Item[] {
+    return [
+      {
+        id: 101,
+        nome: "Refrigerante Lata",
+        preco: 6.00,
+        ingredientes: ["gelo", "limão (opcional)"],
+        imagem: ""
+      },
+      {
+        id: 102,
+        nome: "Suco Natural",
+        preco: 8.50,
+        ingredientes: ["fruta", "água", "açúcar (opcional)"],
+        imagem: ""
+      },
+      {
+        id: 103,
+        nome: "Água Mineral",
+        preco: 4.00,
+        ingredientes: [],
+        imagem: ""
+      }
+    ];
+  }
 }

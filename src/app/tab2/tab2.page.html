@@ -1,29 +1,45 @@
-<ion-header>
+<ion-header class="">
   <ion-toolbar>
-    <ion-title>
-      Photo Gallery
+    <ion-title class="ion-text-center">
+      Bebidas
     </ion-title>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Photo Gallery</ion-title>
-    </ion-toolbar>
   </ion-header>
 
-  <ion-grid>
-    <ion-row>
-    <ion-col size="6" *ngFor="let photo of photoService.photos; index as position">
-      <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)"></ion-img>
-    </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-content>
+    <ion-list *ngFor="let produto of bebidas">
+      <ion-item-sliding>
+        <ion-item-options side="start">
+          <ion-item-option color="success">Editar</ion-item-option>
+        </ion-item-options>
 
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button (click)="photoService.addNewToGallery()">
-      <ion-icon name="camera"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-</ion-content>
+        <ion-item>
+          <ion-avatar>
+            <img class="avatar"
+              src="https://img.freepik.com/free-photo/refreshing-cold-soda-with-bubbles-glass_140725-11866.jpg" />
+          </ion-avatar>
+
+          <ion-label class="label">
+            <h2>
+              {{ produto.nome }}
+            </h2>
+            <h4 class="preco">
+              R$ {{ produto.preco }}
+            </h4>
+            <p>
+              {{ produto.ingredientes }}
+            </p>
+          </ion-label>
+          <ion-button shape="round" slot="end" fill="clear" class="btn-icon"
+            (click)="adicionarProduto(produto)">
+            <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option color="danger">Deletar</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+
+    </ion-list>
+  </ion-content>
