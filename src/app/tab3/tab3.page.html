@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Tab 3
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div>
+
+  </div>
+
+  <div>
+    <ion-list *ngIf = "pedido.length > 0">
+      <ng-container *ngFor="let produto of pedido">
+        <ion-item>
+          <ion-avatar slot="start">
+            <img [src]="produto.imagem" [alt]="produto.nome">
+          </ion-avatar>
+
+          <ion-label>
+            <h2>{{produto.nome}}</h2>
+            <p>{{produto.ingredientes}}</p>
+            <h2>{{produto.preco}}</h2>
+            <p *ngIf="produto.ingredientesRemovidos.length > 0">
+              {{produto.ingredientesRemovidos.join(',')}}
+            </p>
+          </ion-label>
+          <ion-item-group slot="end">
+            <ion-button fill="clear" size="small" (click)="editarIngredientes(produto)">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" color="danger" size="small" (click)="removerItem(produto.idSequencial)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-item-group>
+        </ion-item>
+
+        <ion-item *ngIf="itemEditando">
+          <ion-label>
+            <h3>Editar ingredientes</h3>
+            <div>
+              <ion-item *ngFor="let ingrediente of produto.ingredientes" lines="none">
+                <ion-checkbox slot="start" [checked]="ingredientesSelecionados[ingrediente]"
+                  (ionChange)="ingredientesSelecionados[ingrediente] = $event.detail.checked">
+                </ion-checkbox>
+                <ion-label>{{ ingrediente }}</ion-label>
+              </ion-item>
+            </div>
+            <div>
+              <ion-button fill="outline" size="small" (click)="cancelarEdicao()">
+                cancelar
+              </ion-button>
+              <ion-button fill="outline" size="small" (click)="salvarIngredientes()">
+                salvar
+              </ion-button>
+            </div>
+          </ion-label>
+        </ion-item>
+
+
+      </ng-container>
+
+      <ion-card>
+        
+            <ion-button fill="clear" color="danger">
+              cancelar
+            </ion-button>
+            <ion-button fill="clear">
+              finalizar
+            </ion-button>
+      </ion-card>
+
+    </ion-list>
+  </div>
+
+
+
+</ion-content>

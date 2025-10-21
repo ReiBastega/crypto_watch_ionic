@@ -1,0 +1,47 @@
+<ion-header class="">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      Lanches
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-list *ngFor ="let produto of lanches">
+  <ion-item-sliding>
+    <ion-item-options side="start">
+      <ion-item-option color="success">Editar</ion-item-option>
+    </ion-item-options>
+
+    <ion-item >
+      <ion-avatar>
+        <img class="avatar"
+          src="http://cloudfront-us-east-1.images.arcpublishing.com/estadao/77XTHHCCLBEXLC2Y5RK4PN37CE.jpg" />
+      </ion-avatar>
+
+      <ion-label class="label">
+        <h2>
+          {{produto.nome}}
+        </h2>
+        <h4 class="preco">
+          R$ {{produto.preco}}
+        </h4>
+        <p>
+          {{produto.ingredientes}}
+        </p>
+      </ion-label>
+      <ion-button shape="round" slot="end" fill="clear" class="btn-icon" (click)="adicionarProduto(produto)">
+        <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-item-options side="end">
+      <ion-item-option color="danger">Deletar</ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+
+</ion-list>
+  
+
+
+</ion-content>

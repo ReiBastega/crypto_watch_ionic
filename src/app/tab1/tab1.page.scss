@@ -1,0 +1,36 @@
+ion-content ion-toolbar {
+  --background: translucent;
+}
+
+ion-item {
+  --inner-padding-start:0;
+  display: flex;
+  align-items: center;
+
+}
+
+.avatar{
+  width: 7%;
+  height: auto;
+  min-width: 7%;
+  margin-right: 2%;
+}
+
+.label {
+  width: 70%;
+}
+
+.label h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.label .preco {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.btn-icon ion-icon{
+
+  font-size: 2.5rem;
+}
