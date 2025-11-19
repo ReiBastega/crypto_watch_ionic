@@ -1,3 +1,128 @@
-ion-content ion-toolbar {
-  --background: translucent;
+.wallet-bg {
+  --background: radial-gradient(circle at 30% 10%, rgba(0, 199, 255, 0.1), transparent 25%),
+    radial-gradient(circle at 80% 20%, rgba(255, 147, 47, 0.2), transparent 25%),
+    #0c0f1a;
+  color: #e6ebff;
+}
+
+.toolbar-glass {
+  --background: rgba(17, 19, 28, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+.portfolio-card {
+  margin: 16px;
+  padding: 16px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(47, 201, 255, 0.2), rgba(255, 142, 38, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+
+  h1 {
+    margin: 6px 0 14px;
+    font-size: 1.6rem;
+    font-weight: 800;
+  }
+
+  p {
+    margin: 0;
+    color: #c3d6ff;
+  }
+}
+
+.mini-metrics {
+  display: flex;
+  gap: 18px;
+
+  small {
+    color: #9fb0d2;
+  }
+
+  strong {
+    display: block;
+    font-size: 1.1rem;
+  }
+}
+
+.wallet-list {
+  background: transparent;
+}
+
+.wallet-card {
+  margin: 10px 14px;
+  border-radius: 16px;
+  background: rgba(18, 22, 33, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #e6ebff;
+
+  ion-item {
+    --background: transparent;
+  }
+
+  h2 {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  h3 {
+    margin: 6px 0 2px;
+    font-size: 1.3rem;
+  }
+
+  .symbol,
+  .price {
+    color: #9fb0d2;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  ion-badge {
+    border-radius: 10px;
+    padding: 3px 8px;
+    font-weight: 700;
+    &.positive {
+      color: #0dd6a0;
+      background: rgba(13, 214, 160, 0.15);
+    }
+    &.negative {
+      color: #ff5470;
+      background: rgba(255, 84, 112, 0.15);
+    }
+  }
+
+  ion-progress-bar {
+    --progress-background: rgba(0, 255, 188, 0.45);
+  }
+}
+
+.empty {
+  padding: 60px 24px;
+  text-align: center;
+  color: #e6ebff;
+
+  ion-icon {
+    font-size: 56px;
+    color: #4ac6ff;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    margin: 6px 0;
+    font-weight: 700;
+  }
+
+  p {
+    color: #9fb0d2;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 720px) {
+  .mini-metrics {
+    flex-direction: column;
+  }
 }

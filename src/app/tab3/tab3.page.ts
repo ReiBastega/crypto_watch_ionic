@@ -1,74 +1,73 @@
-import { Component } from '@angular/core';
-import { PedidoService } from '../services/pedido.service';
-import { ItemCarrinho } from '../types/Item';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavController, ToastController } from '@ionic/angular';
+import { combineLatest, Subscription } from 'rxjs';
+import { PriceService } from '../services/price.service';
+import { WalletService } from '../services/wallet.service';
+import { Coin, WalletEntry } from '../types/coin';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page {
-  pedido:ItemCarrinho[] = []
+export class Tab3Page implements OnInit, OnDestroy {
+  topGainers: Coin[] = [];
+  topLosers: Coin[] = [];
+  walletTotal = 0;
+  walletCoins: WalletEntry[] = [];
+  private sub?: Subscription;
 
-  ingredientesSelecionados
-  itemEditando:ItemCarrinho
-  
   constructor(
-    private pedidoService: PedidoService
-  ) { }
+    private priceService: PriceService,
+    private walletService: WalletService,
+    private navCtrl: NavController,
+    private toastCtrl: ToastController
+  ) {}
 
-  ionViewWillEnter() {
-    this.pedido = this.pedidoService.getPedido()
-    this.itemEditando= null
-  }
-
-  editarIngredientes(item:ItemCarrinho){
-    this.itemEditando = item;
-    this.ingredientesSelecionados ={}
-  
-    item.ingredientes.forEach((ingrediente)=>{
-      console.log(ingrediente)
-      this.ingredientesSelecionados[ingrediente] = 
-      !item.ingredientesRemovidos.includes(ingrediente)
-    })
-  }
-
-  salvarIngredientes(){
-    if(!this.itemEditando){
-      return;
-    }
-    
-    const ingredientesRemovidos =[]
-    this.itemEditando.ingredientes.forEach((ingrediente)=>{"c"
-      if(!this.ingredientesSelecionados[ingrediente]){
-        ingredientesRemovidos.push(ingrediente)
+  ngOnInit(): void {
+    this.sub = combineLatest([this.priceService.market$, this.walletService.wallet$]).subscribe(
+      ([market, wallet]) => {
+        this.topGainers = [...market].sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h).slice(0, 4);
+        this.topLosers = [...market].sort((a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h).slice(0, 4);
+        this.walletCoins = wallet;
+        this.walletTotal = wallet.reduce((acc, entry) => {
+          const marketCoin = market.find(c => c.id === entry.coinId);
+          const price = marketCoin?.current_price ?? entry.lastPrice ?? 0;
+          return acc + price * entry.quantity;
+        }, 0);
       }
-    })
-    
-    this.itemEditando.ingredientesRemovidos = ingredientesRemovidos
-
-    this.itemEditando = null
-    this.ingredientesSelecionados = []
-
-    console.log("pedido a ser editado", this.pedido)
+    );
   }
 
-
-  cancelarEdicao(){
-    this.itemEditando = null
-    this.ingredientesSelecionados = []
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
 
-
-  removerItem(idASerRemovido:number){
-    this.pedidoService.removerItem(idASerRemovido)
-    this.pedido = this.pedidoService.getPedido()
+  refresh(event?: any): void {
+    this.priceService.fetchMarket().subscribe({
+      next: () => event?.target?.complete(),
+      error: () => {
+        event?.target?.complete();
+        this.presentToast('Não conseguimos atualizar agora.', 'danger');
+      }
+    });
   }
 
+  openDetails(coin: Coin): void {
+    this.navCtrl.navigateForward(`/tabs/detail/${coin.id}`);
+  }
 
+  trackById(_index: number, item: Coin): string {
+    return item.id;
+  }
 
-  
-
-
-
+  private async presentToast(message: string, color: 'success' | 'warning' | 'danger'): Promise<void> {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2400,
+      position: 'bottom',
+      color
+    });
+    toast.present();
+  }
 }

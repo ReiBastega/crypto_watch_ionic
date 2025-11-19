@@ -1,36 +1,143 @@
-ion-content ion-toolbar {
-  --background: translucent;
+.market-bg {
+  --background: radial-gradient(circle at 10% 20%, rgba(0, 199, 255, 0.12), transparent 25%),
+    radial-gradient(circle at 90% 10%, rgba(255, 85, 170, 0.1), transparent 30%),
+    #0c111e;
+  color: #e6ebff;
 }
 
-ion-item {
-  --inner-padding-start:0;
-  display: flex;
+.toolbar-glass {
+  --background: rgba(20, 24, 36, 0.8);
+  backdrop-filter: blur(12px);
+  color: #e6ebff;
+  ion-title {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 18px;
+  padding: 24px 18px 8px;
   align-items: center;
 
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #9ad5ff;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 6px;
+  }
+
+  .sub {
+    color: #9fb0d2;
+    margin: 0 0 12px;
+    line-height: 1.4;
+  }
 }
 
-.avatar{
-  width: 7%;
-  height: auto;
-  min-width: 7%;
-  margin-right: 2%;
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.label {
-  width: 70%;
+.hero-card {
+  background: linear-gradient(135deg, rgba(38, 219, 255, 0.2), rgba(108, 76, 255, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 16px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+
+  p {
+    margin: 0;
+    color: #9fb0d2;
+  }
+
+  h2 {
+    margin: 4px 0 10px;
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  small {
+    color: #9fb0d2;
+  }
 }
 
-.label h2 {
-  margin: 0;
-  font-size: 1rem;
+.glass-input {
+  --background: rgba(255, 255, 255, 0.07);
+  --color: #e6ebff;
+  --placeholder-color: #9fb0d2;
+  margin: 0 14px 10px;
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
 }
 
-.label .preco {
-  font-size: 0.85rem;
-  color: #666;
+.coin-list {
+  background: transparent;
 }
 
-.btn-icon ion-icon{
+.coin-card {
+  margin: 10px 14px;
+  border-radius: 16px;
+  background: rgba(18, 22, 33, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 
-  font-size: 2.5rem;
+  ion-item {
+    --background: transparent;
+    --inner-padding-end: 10px;
+    color: #e6ebff;
+  }
+
+  h2 {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  h3 {
+    margin: 4px 0 0;
+    font-weight: 700;
+    font-size: 1.15rem;
+  }
+
+  .symbol {
+    color: #9fb0d2;
+    margin: 2px 0 0;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  ion-badge {
+    border-radius: 10px;
+    padding: 3px 8px;
+    font-weight: 700;
+    &.positive {
+      color: #0dd6a0;
+      background: rgba(13, 214, 160, 0.15);
+    }
+    &.negative {
+      color: #ff5470;
+      background: rgba(255, 84, 112, 0.15);
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
 }

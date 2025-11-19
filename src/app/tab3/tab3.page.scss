@@ -1,3 +1,122 @@
-ion-content ion-toolbar {
-  --background: translucent;
+.pulse-bg {
+  --background: radial-gradient(circle at 15% 20%, rgba(0, 199, 255, 0.12), transparent 25%),
+    radial-gradient(circle at 85% 10%, rgba(255, 85, 170, 0.08), transparent 30%),
+    #0b0f1d;
+  color: #e6ebff;
+}
+
+.toolbar-glass {
+  --background: rgba(15, 19, 30, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+.insight-hero {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px;
+  padding: 20px 16px 10px;
+
+  h1 {
+    margin: 4px 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+
+  p {
+    color: #b7c8f2;
+    margin: 6px 0;
+  }
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  color: #8fd8ff;
+  letter-spacing: 0.4px;
+  margin: 0;
+}
+
+.pulse-card {
+  padding: 16px;
+  background: rgba(32, 39, 61, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+}
+
+.grid {
+  padding: 12px 14px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 14px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+ion-card {
+  background: rgba(18, 22, 34, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #e6ebff;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.card-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+
+  h4 {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    color: #9fb0d2;
+  }
+}
+
+ion-badge {
+  &.positive {
+    color: #0dd6a0;
+    background: rgba(13, 214, 160, 0.15);
+  }
+  &.negative {
+    color: #ff5470;
+    background: rgba(255, 84, 112, 0.15);
+  }
+}
+
+h5 {
+  margin: 8px 0 2px;
+  font-size: 1.15rem;
+}
+
+@media (max-width: 768px) {
+  .insight-hero {
+    grid-template-columns: 1fr;
+  }
 }

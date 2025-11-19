@@ -1,45 +1,75 @@
-<ion-header class="">
-  <ion-toolbar>
-    <ion-title class="ion-text-center">
-      Bebidas
-    </ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="toolbar-glass">
+    <ion-title>Minha wallet</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="refresh()">
+        <ion-icon name="reload"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
-  </ion-header>
+</ion-header>
 
-  <ion-content>
-    <ion-list *ngFor="let produto of bebidas">
-      <ion-item-sliding>
-        <ion-item-options side="start">
-          <ion-item-option color="success">Editar</ion-item-option>
-        </ion-item-options>
+<ion-content fullscreen class="wallet-bg">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content pullingText="Atualize cotacoes"></ion-refresher-content>
+  </ion-refresher>
 
-        <ion-item>
-          <ion-avatar>
-            <img class="avatar"
-              src="https://img.freepik.com/free-photo/refreshing-cold-soda-with-bubbles-glass_140725-11866.jpg" />
-          </ion-avatar>
+  <section class="portfolio-card">
+    <p>Valor estimado</p>
+    <h1>\${{ total | number:'1.2-2' }}</h1>
+    <div class="mini-metrics">
+      <div>
+        <small>Ativos</small>
+        <strong>{{ positions.length }}</strong>
+      </div>
+      <div>
+        <small>Media 24h</small>
+        <strong>
+          {{ avgChange | number:'1.1-1' }}%
+        </strong>
+      </div>
+    </div>
+  </section>
 
-          <ion-label class="label">
-            <h2>
-              {{ produto.nome }}
-            </h2>
-            <h4 class="preco">
-              R$ {{ produto.preco }}
-            </h4>
-            <p>
-              {{ produto.ingredientes }}
-            </p>
-          </ion-label>
-          <ion-button shape="round" slot="end" fill="clear" class="btn-icon"
-            (click)="adicionarProduto(produto)">
-            <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
+  <ion-list class="wallet-list" *ngIf="positions.length; else emptyState">
+    <ion-card class="wallet-card" *ngFor="let position of positions; trackBy: trackByCoin">
+      <ion-item lines="none">
+        <ion-avatar slot="start">
+          <img [src]="position.image" [alt]="position.name" />
+        </ion-avatar>
+        <ion-label>
+          <div class="row">
+            <h2>{{ position.name }}</h2>
+            <ion-badge [class.positive]="position.change24h >= 0" [class.negative]="position.change24h < 0">
+              {{ position.change24h | number:'1.1-1' }}%
+            </ion-badge>
+          </div>
+          <p class="symbol">{{ position.symbol | uppercase }} - {{ position.quantity }} unidades</p>
+          <h3>\${{ position.total | number:'1.2-2' }}</h3>
+          <p class="price">Preco atual: ${{ position.currentPrice | number:'1.2-2' }}</p>
+        </ion-label>
+        <ion-buttons slot="end">
+          <ion-button fill="clear" (click)="openDetails(position)">
+            <ion-icon slot="icon-only" name="trending-up-outline"></ion-icon>
           </ion-button>
-        </ion-item>
+          <ion-button fill="clear" (click)="editAmount(position)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="danger" (click)="remove(position)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <ion-progress-bar [value]="allocation(position)" color="primary"></ion-progress-bar>
+    </ion-card>
+  </ion-list>
 
-        <ion-item-options side="end">
-          <ion-item-option color="danger">Deletar</ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-
-    </ion-list>
-  </ion-content>
+  <ng-template #emptyState>
+    <div class="empty">
+      <ion-icon name="wallet-outline"></ion-icon>
+      <h3>Sua carteira esta vazia</h3>
+      <p>Adicione moedas a partir do mercado para acompanhar seu patrimonio.</p>
+      <ion-button routerLink="/tabs/tab1" color="primary">Ir para o mercado</ion-button>
+    </div>
+  </ng-template>
+</ion-content>

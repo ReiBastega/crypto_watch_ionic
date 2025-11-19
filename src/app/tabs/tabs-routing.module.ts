@@ -38,6 +38,16 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'detail/:id',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../coin-detail/coin-detail.module').then(m => m.CoinDetailPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: 'tab1',
         pathMatch: 'full'

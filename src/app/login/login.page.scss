@@ -1,6 +1,70 @@
-ion-content {
+.login-bg {
+  --background: linear-gradient(135deg, #0c0f1a, #0f1d33 50%, #0b0f1d);
+  color: #e6ebff;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  width: 100%;
+  padding: 60px 22px 30px;
+  gap: 20px;
+}
+
+.hero {
+  padding: 18px;
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8fd8ff;
+    margin: 0 0 6px;
+  }
+
+  h1 {
+    margin: 0 0 10px;
+    font-weight: 800;
+    font-size: 2rem;
+  }
+
+  .sub {
+    color: #b7c8f2;
+    line-height: 1.4;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    margin-top: 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.login-card {
+  background: rgba(22, 25, 39, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  color: #e6ebff;
+
+  ion-item {
+    --background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+
+  ion-card-subtitle {
+    color: #9fb0d2;
+  }
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

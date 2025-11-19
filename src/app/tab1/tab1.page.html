@@ -1,47 +1,76 @@
-<ion-header class="">
-  <ion-toolbar>
-    <ion-title class="ion-text-center">
-      Lanches
-    </ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="toolbar-glass">
+    <ion-title>Mercado cripto</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="loadMarket()">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-<ion-list *ngFor ="let produto of lanches">
-  <ion-item-sliding>
-    <ion-item-options side="start">
-      <ion-item-option color="success">Editar</ion-item-option>
-    </ion-item-options>
+<ion-content fullscreen class="market-bg">
+  <ion-refresher slot="fixed" (ionRefresh)="loadMarket($event)">
+    <ion-refresher-content pullingText="Puxe para atualizar"></ion-refresher-content>
+  </ion-refresher>
 
-    <ion-item >
-      <ion-avatar>
-        <img class="avatar"
-          src="http://cloudfront-us-east-1.images.arcpublishing.com/estadao/77XTHHCCLBEXLC2Y5RK4PN37CE.jpg" />
-      </ion-avatar>
+  <section class="hero">
+    <div>
+      <p class="eyebrow">CryptoWallet Tracker</p>
+      <h1>Preços em tempo real para construir sua próxima jogada.</h1>
+      <p class="sub">Adicione moedas, monitore o total da sua carteira e abra detalhes sem sair do app.</p>
+      <div class="hero-actions">
+        <ion-button size="small" color="primary" fill="solid" (click)="loadMarket()" [disabled]="loading">
+          <ion-icon name="flash" slot="start"></ion-icon>
+          Atualizar preços
+        </ion-button>
+        <ion-chip color="tertiary" outline>
+          <ion-icon name="time-outline"></ion-icon>
+          <ion-label>{{ lastUpdated ? (lastUpdated | date:'HH:mm:ss') : 'Carregando...' }}</ion-label>
+        </ion-chip>
+      </div>
+    </div>
+    <div class="hero-card">
+      <p>Variação 24h</p>
+      <h2>{{ coins[0]?.price_change_percentage_24h | number:'1.1-1' }}%</h2>
+      <ion-progress-bar color="success" [value]="heroBarValue()"></ion-progress-bar>
+      <small>Baseado no top 50 da CoinGecko</small>
+    </div>
+  </section>
 
-      <ion-label class="label">
-        <h2>
-          {{produto.nome}}
-        </h2>
-        <h4 class="preco">
-          R$ {{produto.preco}}
-        </h4>
-        <p>
-          {{produto.ingredientes}}
-        </p>
-      </ion-label>
-      <ion-button shape="round" slot="end" fill="clear" class="btn-icon" (click)="adicionarProduto(produto)">
-        <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-item>
+  <ion-searchbar
+    placeholder="Buscar por nome ou ticker (ex: btc)"
+    debounce="200"
+    [(ngModel)]="searchTerm"
+    (ionInput)="applyFilter()"
+    class="glass-input"
+  ></ion-searchbar>
 
-    <ion-item-options side="end">
-      <ion-item-option color="danger">Deletar</ion-item-option>
-    </ion-item-options>
-  </ion-item-sliding>
-
-</ion-list>
-  
-
-
+  <ion-list class="coin-list">
+    <ion-card *ngFor="let coin of filteredCoins; trackBy: trackById" class="coin-card">
+      <ion-item lines="none">
+        <ion-avatar slot="start">
+          <img [src]="coin.image" [alt]="coin.name" />
+        </ion-avatar>
+        <ion-label>
+          <div class="row">
+            <h2>{{ coin.name }}</h2>
+            <ion-badge [class.positive]="coin.price_change_percentage_24h >= 0" [class.negative]="coin.price_change_percentage_24h < 0">
+              {{ coin.price_change_percentage_24h | number:'1.1-1' }}%
+            </ion-badge>
+          </div>
+          <p class="symbol">{{ coin.symbol | uppercase }} • Cap: {{ coin.market_cap | number:'1.0-0' }}</p>
+          <h3>${{ coin.current_price | number:'1.2-2' }}</h3>
+        </ion-label>
+        <ion-buttons slot="end">
+          <ion-button fill="clear" (click)="openDetails(coin)">
+            <ion-icon name="stats-chart-outline"></ion-icon>
+          </ion-button>
+          <ion-button color="primary" shape="round" (click)="addToWallet(coin)">
+            <ion-icon name="add" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-card>
+  </ion-list>
 </ion-content>

@@ -1,81 +1,86 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="toolbar-glass">
+    <ion-title>Pulse</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="refresh()">
+        <ion-icon name="sync"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen class="pulse-bg">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content pullingText="Atualize os destaques"></ion-refresher-content>
+  </ion-refresher>
 
-  <div>
-
-  </div>
-
-  <div>
-    <ion-list *ngIf = "pedido.length > 0">
-      <ng-container *ngFor="let produto of pedido">
-        <ion-item>
-          <ion-avatar slot="start">
-            <img [src]="produto.imagem" [alt]="produto.nome">
+  <section class="insight-hero">
+    <div>
+      <p class="eyebrow">Radar inteligente</p>
+      <h1>Insights rápidos da sua carteira</h1>
+      <p>Total da wallet estimado: <strong>\${{ walletTotal | number:'1.2-2' }}</strong></p>
+      <ion-button size="small" routerLink="/tabs/tab2" color="primary">
+        <ion-icon name="wallet-outline" slot="start"></ion-icon>
+        Abrir carteira
+      </ion-button>
+    </div>
+    <div class="pulse-card">
+      <p>Watchlist</p>
+      <div class="chips">
+        <ion-chip *ngFor="let entry of walletCoins | slice:0:4">
+          <ion-avatar>
+            <img [src]="entry.image" [alt]="entry.name">
           </ion-avatar>
+          <ion-label>{{ entry.symbol | uppercase }} • {{ entry.quantity }}</ion-label>
+        </ion-chip>
+        <p *ngIf="!walletCoins.length">Adicione moedas para ver aqui.</p>
+      </div>
+    </div>
+  </section>
 
-          <ion-label>
-            <h2>{{produto.nome}}</h2>
-            <p>{{produto.ingredientes}}</p>
-            <h2>{{produto.preco}}</h2>
-            <p *ngIf="produto.ingredientesRemovidos.length > 0">
-              {{produto.ingredientesRemovidos.join(',')}}
-            </p>
-          </ion-label>
-          <ion-item-group slot="end">
-            <ion-button fill="clear" size="small" (click)="editarIngredientes(produto)">
-              <ion-icon name="create-outline"></ion-icon>
-            </ion-button>
-            <ion-button fill="clear" color="danger" size="small" (click)="removerItem(produto.idSequencial)">
-              <ion-icon name="trash-outline"></ion-icon>
-            </ion-button>
-          </ion-item-group>
-        </ion-item>
-
-        <ion-item *ngIf="itemEditando">
-          <ion-label>
-            <h3>Editar ingredientes</h3>
+  <section class="grid">
+    <div>
+      <div class="section-title">
+        <h3>Maiores altas</h3>
+        <ion-icon name="trending-up-outline"></ion-icon>
+      </div>
+      <div class="cards-grid">
+        <ion-card *ngFor="let coin of topGainers; trackBy: trackById" (click)="openDetails(coin)">
+          <div class="card-row">
+            <ion-avatar>
+              <img [src]="coin.image" [alt]="coin.name">
+            </ion-avatar>
             <div>
-              <ion-item *ngFor="let ingrediente of produto.ingredientes" lines="none">
-                <ion-checkbox slot="start" [checked]="ingredientesSelecionados[ingrediente]"
-                  (ionChange)="ingredientesSelecionados[ingrediente] = $event.detail.checked">
-                </ion-checkbox>
-                <ion-label>{{ ingrediente }}</ion-label>
-              </ion-item>
+              <h4>{{ coin.name }}</h4>
+              <p>{{ coin.symbol | uppercase }}</p>
             </div>
+            <ion-badge class="positive">{{ coin.price_change_percentage_24h | number:'1.1-1' }}%</ion-badge>
+          </div>
+          <h5>\${{ coin.current_price | number:'1.2-2' }}</h5>
+        </ion-card>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">
+        <h3>Maiores quedas</h3>
+        <ion-icon name="trending-down-outline"></ion-icon>
+      </div>
+      <div class="cards-grid">
+        <ion-card *ngFor="let coin of topLosers; trackBy: trackById" (click)="openDetails(coin)">
+          <div class="card-row">
+            <ion-avatar>
+              <img [src]="coin.image" [alt]="coin.name">
+            </ion-avatar>
             <div>
-              <ion-button fill="outline" size="small" (click)="cancelarEdicao()">
-                cancelar
-              </ion-button>
-              <ion-button fill="outline" size="small" (click)="salvarIngredientes()">
-                salvar
-              </ion-button>
+              <h4>{{ coin.name }}</h4>
+              <p>{{ coin.symbol | uppercase }}</p>
             </div>
-          </ion-label>
-        </ion-item>
-
-
-      </ng-container>
-
-      <ion-card>
-        
-            <ion-button fill="clear" color="danger">
-              cancelar
-            </ion-button>
-            <ion-button fill="clear">
-              finalizar
-            </ion-button>
-      </ion-card>
-
-    </ion-list>
-  </div>
-
-
-
+            <ion-badge class="negative">{{ coin.price_change_percentage_24h | number:'1.1-1' }}%</ion-badge>
+          </div>
+          <h5>\${{ coin.current_price | number:'1.2-2' }}</h5>
+        </ion-card>
+      </div>
+    </div>
+  </section>
 </ion-content>

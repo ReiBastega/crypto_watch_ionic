@@ -1,0 +1,77 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="toolbar-glass">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalhes</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="coin && loadCoin(coin.id)">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="detail-bg">
+  <ion-refresher slot="fixed" (ionRefresh)="coin && loadCoin(coin.id); $event.target.complete();">
+    <ion-refresher-content pullingText="Atualizar moeda"></ion-refresher-content>
+  </ion-refresher>
+
+  <ng-container *ngIf="!loading && coin; else loadingState">
+    <section class="detail-hero">
+      <div class="header">
+        <ion-avatar>
+          <img [src]="coin.image" [alt]="coin.name" />
+        </ion-avatar>
+        <div>
+          <p class="eyebrow">{{ coin.symbol | uppercase }}</p>
+          <h1>{{ coin.name }}</h1>
+          <ion-badge [class]="priceColor()">{{ coin.price_change_percentage_24h | number:'1.1-1' }}% 24h</ion-badge>
+        </div>
+        <ion-button fill="outline" color="light" (click)="addToWallet()">
+          <ion-icon name="add" slot="start"></ion-icon>
+          Adicionar
+        </ion-button>
+      </div>
+      <div class="price-block">
+        <p>Preço atual</p>
+        <h2>\${{ coin.current_price | number:'1.2-2' }}</h2>
+        <div class="chart-placeholder">
+          <div class="bar" *ngFor="let bar of [20, 40, 30, 60, 35, 55, 50]" [style.height.%]="bar"></div>
+        </div>
+        <small>Gráfico ilustrativo para a tela de apresentação</small>
+      </div>
+    </section>
+
+    <ion-grid class="stats">
+      <ion-row>
+        <ion-col size="6">
+          <p>Máxima 24h</p>
+          <h3>\${{ coin.high_24h | number:'1.2-2' }}</h3>
+        </ion-col>
+        <ion-col size="6">
+          <p>Mínima 24h</p>
+          <h3>\${{ coin.low_24h | number:'1.2-2' }}</h3>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <p>Market Cap</p>
+          <h3>\${{ coin.market_cap | number:'1.0-0' }}</h3>
+        </ion-col>
+        <ion-col size="6">
+          <p>Volume 24h</p>
+          <h3>\${{ coin.total_volume | number:'1.0-0' }}</h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+
+  <ng-template #loadingState>
+    <div class="loading">
+      <ion-skeleton-text animated style="width: 240px; height: 24px;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 180px; height: 16px;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 100%; height: 220px;"></ion-skeleton-text>
+    </div>
+  </ng-template>
+</ion-content>
