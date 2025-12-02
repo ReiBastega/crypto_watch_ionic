@@ -3,10 +3,28 @@
     <div class="hero">
       <p class="eyebrow">CryptoWallet Tracker</p>
       <h1>Monitore e edite sua carteira em tempo real.</h1>
-      <p class="sub">Preços da CoinGecko, CRUD completo e um visual pensado para impressionar.</p>
-      <div class="pill">
-        <ion-icon name="shield-checkmark-outline"></ion-icon>
-        Login simples apenas para liberar as telas.
+      <p class="sub">Precos com base na api da CoinGecko</p>
+      <div class="pills">
+        <span class="pill">
+          <ion-icon name="flash-outline"></ion-icon>
+          Atualizacao a cada 45s
+        </span>
+        <span class="pill">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+          Login simples, dados locais
+        </span>
+      </div>
+      <div class="insights">
+        <div>
+          <p>Mercado acompanhado</p>
+          <h3>50+ moedas</h3>
+          <small>Altas e quedas em 24h</small>
+        </div>
+        <div>
+          <p>Carteira</p>
+          <h3>Rebalanceie rapido</h3>
+          <small>Adicione, edite, remova</small>
+        </div>
       </div>
     </div>
     <ion-card class="login-card">
@@ -21,21 +39,23 @@
             <ion-input type="email" placeholder="seu@email.com" formControlName="email"></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
-            Email inválido
+            Email invalido
           </ion-text>
           <ion-item lines="none">
             <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
             <ion-input type="password" placeholder="Senha" formControlName="password"></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
-            Mínimo 4 caracteres
+            Minimo 4 caracteres
           </ion-text>
-          <ion-button expand="block" class="ion-margin-top" type="submit" [disabled]="form.invalid">
-            Entrar e ver preços
+          <ion-button expand="block" class="ion-margin-top primary-cta" type="submit" [disabled]="form.invalid">
+            Entrar e ver precos
           </ion-button>
+          <p class="footnote">
+            Dica: o acesso e local, entao voce pode usar qualquer combinacao para testar o fluxo.
+          </p>
         </form>
       </ion-card-content>
     </ion-card>
   </div>
 </ion-content>
-

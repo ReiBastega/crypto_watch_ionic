@@ -8,6 +8,9 @@
       <ion-button fill="clear" (click)="coin && loadCoin(coin.id)">
         <ion-icon name="refresh"></ion-icon>
       </ion-button>
+      <ion-button fill="clear" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -28,7 +31,7 @@
           <h1>{{ coin.name }}</h1>
           <ion-badge [class]="priceColor()">{{ coin.price_change_percentage_24h | number:'1.1-1' }}% 24h</ion-badge>
         </div>
-        <ion-button fill="outline" color="light" (click)="addToWallet()">
+        <ion-button fill="solid" class="add-btn" (click)="addToWallet()">
           <ion-icon name="add" slot="start"></ion-icon>
           Adicionar
         </ion-button>

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { PriceService } from '../services/price.service';
 import { WalletService } from '../services/wallet.service';
+import { AuthService } from '../services/auth.service';
 import { Coin } from '../types/coin';
 
 @Component({
@@ -20,7 +21,8 @@ export class CoinDetailPage implements OnInit {
     private walletService: WalletService,
     private navCtrl: NavController,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -85,6 +87,11 @@ export class CoinDetailPage implements OnInit {
       return '';
     }
     return this.coin.price_change_percentage_24h >= 0 ? 'positive' : 'negative';
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.navCtrl.navigateRoot('/login');
   }
 
   private async presentToast(message: string, color: 'success' | 'warning' | 'danger'): Promise<void> {
