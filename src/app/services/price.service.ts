@@ -19,13 +19,11 @@ export class PriceService {
   readonly market$ = this.marketSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    // Kick off auto-refresh to keep prices moving.
     timer(0, 45000)
       .pipe(
         switchMap(() =>
           this.fetchMarket().pipe(
             catchError(() => {
-              // Keep the stream alive even when CoinGecko throttles.
               return of(this.marketSubject.value);
             })
           )

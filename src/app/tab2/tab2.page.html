@@ -16,7 +16,7 @@
 
   <section class="portfolio-card">
     <p>Valor estimado</p>
-    <h1>\${{ total | number:'1.2-2' }}</h1>
+    <h1>${{ total | number:'1.2-2' }}</h1>
     <div class="mini-metrics">
       <div>
         <small>Ativos</small>
@@ -45,7 +45,7 @@
             </ion-badge>
           </div>
           <p class="symbol">{{ position.symbol | uppercase }} - {{ position.quantity }} unidades</p>
-          <h3>\${{ position.total | number:'1.2-2' }}</h3>
+          <h3>${{ position.total | number:'1.2-2' }}</h3>
           <p class="price">Preco atual: ${{ position.currentPrice | number:'1.2-2' }}</p>
         </ion-label>
         <ion-buttons slot="end">

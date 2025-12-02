@@ -18,7 +18,7 @@
     <div>
       <p class="eyebrow">Radar inteligente</p>
       <h1>Insights rápidos da sua carteira</h1>
-      <p>Total da wallet estimado: <strong>\${{ walletTotal | number:'1.2-2' }}</strong></p>
+      <p>Total da wallet estimado: <strong>${{ walletTotal | number:'1.2-2' }}</strong></p>
       <ion-button size="small" routerLink="/tabs/tab2" color="primary">
         <ion-icon name="wallet-outline" slot="start"></ion-icon>
         Abrir carteira
@@ -56,7 +56,7 @@
             </div>
             <ion-badge class="positive">{{ coin.price_change_percentage_24h | number:'1.1-1' }}%</ion-badge>
           </div>
-          <h5>\${{ coin.current_price | number:'1.2-2' }}</h5>
+          <h5>${{ coin.current_price | number:'1.2-2' }}</h5>
         </ion-card>
       </div>
     </div>
@@ -78,7 +78,7 @@
             </div>
             <ion-badge class="negative">{{ coin.price_change_percentage_24h | number:'1.1-1' }}%</ion-badge>
           </div>
-          <h5>\${{ coin.current_price | number:'1.2-2' }}</h5>
+          <h5>${{ coin.current_price | number:'1.2-2' }}</h5>
         </ion-card>
       </div>
     </div>

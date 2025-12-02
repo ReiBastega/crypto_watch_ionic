@@ -34,34 +34,30 @@
         </ion-button>
       </div>
       <div class="price-block">
-        <p>Preço atual</p>
-        <h2>\${{ coin.current_price | number:'1.2-2' }}</h2>
-        <div class="chart-placeholder">
-          <div class="bar" *ngFor="let bar of [20, 40, 30, 60, 35, 55, 50]" [style.height.%]="bar"></div>
-        </div>
-        <small>Gráfico ilustrativo para a tela de apresentação</small>
+        <p>Preco atual</p>
+        <h2>${{ coin.current_price | number:'1.2-2' }}</h2>
       </div>
     </section>
 
     <ion-grid class="stats">
       <ion-row>
         <ion-col size="6">
-          <p>Máxima 24h</p>
-          <h3>\${{ coin.high_24h | number:'1.2-2' }}</h3>
+          <p>Maxima 24h</p>
+          <h3>${{ coin.high_24h | number:'1.2-2' }}</h3>
         </ion-col>
         <ion-col size="6">
-          <p>Mínima 24h</p>
-          <h3>\${{ coin.low_24h | number:'1.2-2' }}</h3>
+          <p>Minima 24h</p>
+          <h3>${{ coin.low_24h | number:'1.2-2' }}</h3>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="6">
           <p>Market Cap</p>
-          <h3>\${{ coin.market_cap | number:'1.0-0' }}</h3>
+          <h3>${{ coin.market_cap | number:'1.0-0' }}</h3>
         </ion-col>
         <ion-col size="6">
           <p>Volume 24h</p>
-          <h3>\${{ coin.total_volume | number:'1.0-0' }}</h3>
+          <h3>${{ coin.total_volume | number:'1.0-0' }}</h3>
         </ion-col>
       </ion-row>
     </ion-grid>
