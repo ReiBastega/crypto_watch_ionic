@@ -1,35 +1,47 @@
-# Build Your First Ionic App: Photo Gallery (Ionic Angular and Capacitor)
+# Crypto Watch Ionic
 
-Get started with Ionic by building a photo gallery app that runs on iOS, Android, and the web - with just one codebase. This is the complete project referenced in the ["Your First App: Angular" guide](https://ionicframework.com/docs/angular/your-first-app). Follow along to create a complete CRUD (create-read-update-delete) experience.
+Aplicativo Ionic/Angular para acompanhar mercado cripto, gerir carteira local e visualizar destaques em tempo real com dados da CoinGecko.
 
-Powered by [Ionic Angular](https://ionicframework.com/docs/angular/overview) (web app) and [Capacitor](https://capacitor.ionicframework.com) (native app runtime).
+## Funcionalidades
+- **Login local**: autenticação simples (token salvo no dispositivo).
+- **Mercado**: lista top 50 moedas, busca por nome/ticker, badge de variação, botão para atualizar preços e abrir detalhes.
+- **Carteira**: adiciona/edita/remove posições, calcula valor total e média 24h, cards em grid responsivo.
+- **Pulse (insights)**: blocos com maiores altas/quedas, tendências 7d/30d, top volume, maior market cap, mais voláteis e moedas perto do ATH.
+- **Detalhes da moeda**: preço atual, high/low 24h, market cap/volume, botão para adicionar à carteira, preço registrado na entrada e P/L calculado vs preço atual.
 
-## How It Works
+## Stack
+- Ionic 7 / Angular
+- RxJS para stream de dados
+- CoinGecko API (endpoint `coins/markets`)
 
-After the user navigates to Tab 2 (Photos), they can tap/click on the camera button to open up the device's camera. After taking or selecting a photo, it's stored permanently into the device's filesystem. When the user reopens the app at a later time, the photo images are loaded from the filesystem and displayed again in the gallery. The user can tap on a photo to be presented with the option to remove the photo.
+## Pré-requisitos
+- Node.js 18+
+- npm 9+
+- Ionic CLI (opcional, mas recomendado): `npm install -g @ionic/cli`
 
-## Feature Overview
-* App framework: [Angular](https://angular.io)
-* UI components: [Ionic Framework](https://ionicframework.com/docs/components)
-  * Camera button: [Floating Action Button (FAB)](https://ionicframework.com/docs/api/fab)
-  * Photo Gallery display: [Grid](https://ionicframework.com/docs/api/grid)
-  * Delete Photo dialog: [Action Sheet](https://ionicframework.com/docs/api/action-sheet) 
-* Native runtime: [Capacitor](https://capacitor.ionicframework.com)
-  * Taking photos: [Camera API](https://capacitor.ionicframework.com/docs/apis/camera)
-  * Writing photo to the filesystem: [Filesystem API](https://capacitor.ionicframework.com/docs/apis/filesystem)
-  * Storing photo gallery metadata: [Preferences API](https://capacitor.ionicframework.com/docs/apis/preferences)
+## Instalação e execução
+1. Instale dependências: `npm install`
+2. Execução web (dev): `ionic serve`  
+   - Alternativa sem CLI global: `npx ionic serve`
+3. (Opcional) Build web: `npm run build`
+4. (Opcional) Android/iOS: use `ionic cap` após o build (`ionic cap copy android` / `ios`) e abra o projeto nativo pelo Android Studio/Xcode.
 
-## Project Structure
-* Tab2 (Photos) (`src/app/tab2/`): Photo Gallery UI and basic logic.
-* PhotoService (`src/app/services/photo.service.ts`): Logic encapsulating Capacitor APIs, including Camera, Filesystem, and Preferences.
+## Configuração da API
+- Já configurado para CoinGecko sem chave (pública). Endpoint: `https://api.coingecko.com/api/v3/coins/markets` com `vs_currency=usd` e `price_change_percentage=24h,7d,30d`.
+- Se quiser usar proxy ou limitar requisições, ajuste em `src/app/services/price.service.ts`.
 
-## How to Run
+## Scripts úteis
+- `npm start` / `ionic serve`: servidor de desenvolvimento.
+- `npm run build`: build de produção para `www/`.
+- `npm run test`: testes unitários (Karma/Jasmine, se configurado).
 
-> Note: It's highly recommended to follow along with the [tutorial guide](https://ionicframework.com/docs/angular/your-first-app), which goes into more depth, but this is the fastest way to run the app. 
+## Estrutura relevante
+- `src/app/tab1`: mercado (lista, busca, adicionar a carteira).
+- `src/app/tab2`: carteira (posições, edit/remove, grid responsivo).
+- `src/app/tab3`: pulse/insights (tops e tendências com dados CoinGecko).
+- `src/app/coin-detail`: detalhe por moeda e P/L da posição.
+- `src/app/services`: integração com CoinGecko (`price.service`) e carteira local (`wallet.service`).
 
-0) Install Ionic if needed: `npm install -g @ionic/cli`.
-1) Clone this repository.
-2) In a terminal, change directory into the repo: `cd photo-gallery-capacitor-ng`.
-3) Install all packages: `npm install`.
-4) Run on the web: `ionic serve`.
-5) Run on iOS or Android: See [here](https://ionicframework.com/docs/building/running).
+## Notas
+- Os dados da carteira ficam em `localStorage`. Limpar storage reseta o app.
+- Sem dependências externas além das libs instaladas via npm.
