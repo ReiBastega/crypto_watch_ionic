@@ -5,6 +5,9 @@
       <ion-button fill="clear" (click)="refresh()">
         <ion-icon name="sync"></ion-icon>
       </ion-button>
+      <ion-button fill="clear" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -83,4 +86,143 @@
       </div>
     </div>
   </section>
+
+  <section class="grid">
+    <div>
+      <div class="section-title">
+        <h3>Tendencias 7d</h3>
+        <ion-icon name="pulse-outline"></ion-icon>
+      </div>
+      <div class="cards-grid">
+        <ion-card *ngFor="let coin of top7d; trackBy: trackById" (click)="openDetails(coin)">
+          <div class="card-row">
+            <ion-avatar>
+              <img [src]="coin.image" [alt]="coin.name">
+            </ion-avatar>
+            <div>
+              <h4>{{ coin.name }}</h4>
+              <p>{{ coin.symbol | uppercase }}</p>
+            </div>
+            <ion-badge class="positive">{{ coin.price_change_percentage_7d_in_currency | number:'1.1-1' }}%</ion-badge>
+          </div>
+          <h5>${{ coin.current_price | number:'1.2-2' }}</h5>
+        </ion-card>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">
+        <h3>Tendencias 30d</h3>
+        <ion-icon name="trending-up"></ion-icon>
+      </div>
+      <div class="cards-grid">
+        <ion-card *ngFor="let coin of top30d; trackBy: trackById" (click)="openDetails(coin)">
+          <div class="card-row">
+            <ion-avatar>
+              <img [src]="coin.image" [alt]="coin.name">
+            </ion-avatar>
+            <div>
+              <h4>{{ coin.name }}</h4>
+              <p>{{ coin.symbol | uppercase }}</p>
+            </div>
+            <ion-badge class="positive">{{ coin.price_change_percentage_30d_in_currency | number:'1.1-1' }}%</ion-badge>
+          </div>
+          <h5>${{ coin.current_price | number:'1.2-2' }}</h5>
+        </ion-card>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div>
+      <div class="section-title">
+        <h3>Top volume 24h</h3>
+        <ion-icon name="bar-chart-outline"></ion-icon>
+      </div>
+      <div class="cards-grid">
+        <ion-card *ngFor="let coin of topVolume; trackBy: trackById" (click)="openDetails(coin)">
+          <div class="card-row">
+            <ion-avatar>
+              <img [src]="coin.image" [alt]="coin.name">
+            </ion-avatar>
+            <div>
+              <h4>{{ coin.name }}</h4>
+              <p>{{ coin.symbol | uppercase }}</p>
+            </div>
+            <ion-badge>{{ coin.total_volume | number:'1.0-0' }}</ion-badge>
+          </div>
+          <h5>${{ coin.current_price | number:'1.2-2' }}</h5>
+        </ion-card>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">
+        <h3>Maior market cap</h3>
+        <ion-icon name="trophy-outline"></ion-icon>
+      </div>
+      <div class="cards-grid">
+        <ion-card *ngFor="let coin of topMarketCap; trackBy: trackById" (click)="openDetails(coin)">
+          <div class="card-row">
+            <ion-avatar>
+              <img [src]="coin.image" [alt]="coin.name">
+            </ion-avatar>
+            <div>
+              <h4>{{ coin.name }}</h4>
+              <p>Rank #{{ coin.market_cap_rank || '-' }}</p>
+            </div>
+            <ion-badge>{{ coin.market_cap | number:'1.0-0' }}</ion-badge>
+          </div>
+          <h5>${{ coin.current_price | number:'1.2-2' }}</h5>
+        </ion-card>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div>
+      <div class="section-title">
+        <h3>Mais volateis 24h</h3>
+        <ion-icon name="flash-outline"></ion-icon>
+      </div>
+      <div class="cards-grid">
+        <ion-card *ngFor="let coin of topVolatile; trackBy: trackById" (click)="openDetails(coin)">
+          <div class="card-row">
+            <ion-avatar>
+              <img [src]="coin.image" [alt]="coin.name">
+            </ion-avatar>
+            <div>
+              <h4>{{ coin.name }}</h4>
+              <p>{{ coin.symbol | uppercase }}</p>
+            </div>
+            <ion-badge>{{ coin.price_change_percentage_24h | number:'1.1-1' }}%</ion-badge>
+          </div>
+          <h5>${{ coin.current_price | number:'1.2-2' }}</h5>
+        </ion-card>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">
+        <h3>Perto do ATH</h3>
+        <ion-icon name="rocket-outline"></ion-icon>
+      </div>
+      <div class="cards-grid">
+        <ion-card *ngFor="let coin of nearAth; trackBy: trackById" (click)="openDetails(coin)">
+          <div class="card-row">
+            <ion-avatar>
+              <img [src]="coin.image" [alt]="coin.name">
+            </ion-avatar>
+            <div>
+              <h4>{{ coin.name }}</h4>
+              <p>{{ coin.symbol | uppercase }}</p>
+            </div>
+            <ion-badge>{{ coin.ath_change_percentage | number:'1.1-1' }}%</ion-badge>
+          </div>
+          <h5>${{ coin.current_price | number:'1.2-2' }}</h5>
+        </ion-card>
+      </div>
+    </div>
+  </section>
+
 </ion-content>

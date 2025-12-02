@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { PriceService } from '../services/price.service';
 import { WalletService } from '../services/wallet.service';
-import { AuthService } from '../services/auth.service';
-import { Coin } from '../types/coin';
+import { Coin, WalletEntry } from '../types/coin';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-coin-detail',
   templateUrl: './coin-detail.page.html',
   styleUrls: ['./coin-detail.page.scss']
 })
-export class CoinDetailPage implements OnInit {
+export class CoinDetailPage implements OnInit, OnDestroy {
   coin?: Coin;
   loading = true;
+   walletEntry?: WalletEntry;
+   private walletSub?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,15 +23,21 @@ export class CoinDetailPage implements OnInit {
     private walletService: WalletService,
     private navCtrl: NavController,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController,
-    private authService: AuthService
+    private toastCtrl: ToastController
   ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.loadCoin(id);
+      this.walletSub = this.walletService.wallet$.subscribe(entries => {
+        this.walletEntry = entries.find(e => e.coinId === id);
+      });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.walletSub?.unsubscribe();
   }
 
   loadCoin(id: string): void {
@@ -89,9 +97,18 @@ export class CoinDetailPage implements OnInit {
     return this.coin.price_change_percentage_24h >= 0 ? 'positive' : 'negative';
   }
 
-  logout(): void {
-    this.authService.logout();
-    this.navCtrl.navigateRoot('/login');
+  entryPrice(): number | undefined {
+    return this.walletEntry?.lastPrice;
+  }
+
+  totalGainValue(): number | undefined {
+    if (!this.coin || !this.walletEntry?.lastPrice) return undefined;
+    return (this.coin.current_price - this.walletEntry.lastPrice) * this.walletEntry.quantity;
+  }
+
+  totalGainPercent(): number | undefined {
+    if (!this.coin || !this.walletEntry?.lastPrice) return undefined;
+    return ((this.coin.current_price - this.walletEntry.lastPrice) / this.walletEntry.lastPrice) * 100;
   }
 
   private async presentToast(message: string, color: 'success' | 'warning' | 'danger'): Promise<void> {

@@ -46,22 +46,33 @@
 
 .wallet-list {
   background: transparent;
+  padding: 0 12px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
 }
 
 .wallet-card {
-  margin: 10px 14px;
+  margin: 0;
   border-radius: 16px;
   background: rgba(36, 0, 70, 0.9);
   border: 1px solid rgba(199, 125, 255, 0.24);
   color: #ffffff;
+  height: 100%;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
 
   ion-item {
     --background: transparent;
+    align-items: flex-start;
+    --inner-padding-end: 6px;
   }
 
   h2 {
     margin: 0;
     font-weight: 700;
+    word-break: break-word;
   }
 
   h3 {
@@ -72,18 +83,31 @@
   .symbol,
   .price {
     color: #e0aaff;
+    white-space: normal;
+    word-break: break-word;
   }
 
   .row {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  ion-buttons[slot='end'] {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-self: stretch;
+    justify-content: center;
+    padding-left: 6px;
   }
 
   ion-badge {
     border-radius: 10px;
     padding: 3px 8px;
     font-weight: 700;
+    min-width: fit-content;
     &.positive {
       color: #ffffff;
       background: rgba(13, 214, 160, 0.25);

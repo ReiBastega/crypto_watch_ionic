@@ -5,12 +5,6 @@
     </ion-buttons>
     <ion-title>Detalhes</ion-title>
     <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="coin && loadCoin(coin.id)">
-        <ion-icon name="refresh"></ion-icon>
-      </ion-button>
-      <ion-button fill="clear" (click)="logout()">
-        <ion-icon name="log-out-outline"></ion-icon>
-      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -39,6 +33,19 @@
       <div class="price-block">
         <p>Preco atual</p>
         <h2>${{ coin.current_price | number:'1.2-2' }}</h2>
+      </div>
+      <div class="wallet-insight" *ngIf="walletEntry">
+        <div>
+          <p>Preco ao adicionar</p>
+          <h3>${{ entryPrice() | number:'1.2-2' }}</h3>
+        </div>
+        <div>
+          <p>Resultado na carteira</p>
+          <h3 [class.positive]="(totalGainValue() ?? 0) >= 0" [class.negative]="(totalGainValue() ?? 0) < 0">
+            ${{ totalGainValue() | number:'1.2-2' }} ({{ totalGainPercent() | number:'1.1-1' }}%)
+          </h3>
+          <small>Qtd: {{ walletEntry.quantity }}</small>
+        </div>
       </div>
     </section>
 

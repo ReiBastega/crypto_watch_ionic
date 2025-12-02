@@ -53,7 +53,7 @@
 .grid {
   padding: 12px 14px 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  grid-template-columns: 1fr;
   gap: 14px;
 }
 
@@ -70,11 +70,14 @@
 
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 12px;
 }
 
 ion-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 170px;
   background: rgba(36, 0, 70, 0.9);
   border: 1px solid rgba(199, 125, 255, 0.22);
   color: #ffffff;
@@ -85,17 +88,20 @@ ion-card {
 .card-row {
   display: grid;
   grid-template-columns: auto 1fr auto;
-  align-items: center;
+  align-items: start;
   gap: 10px;
+  word-break: break-word;
 
   h4 {
     margin: 0;
     font-weight: 700;
+    word-break: break-word;
   }
 
   p {
     margin: 0;
     color: #e0aaff;
+    word-break: break-word;
   }
 }
 

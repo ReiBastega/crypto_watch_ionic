@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { combineLatest, Subscription } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 import { PriceService } from '../services/price.service';
 import { WalletService } from '../services/wallet.service';
 import { Coin, WalletEntry } from '../types/coin';
@@ -27,7 +28,8 @@ export class Tab2Page implements OnInit, OnDestroy {
     private priceService: PriceService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -124,6 +126,11 @@ export class Tab2Page implements OnInit, OnDestroy {
 
   trackByCoin(_index: number, item: WalletPosition): string {
     return item.coinId;
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.navCtrl.navigateRoot('/login');
   }
 
   private toPosition(entry: WalletEntry, market: Coin[]): WalletPosition {

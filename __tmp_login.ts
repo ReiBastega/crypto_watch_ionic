@@ -30,7 +30,6 @@ export class LoginPage implements OnInit {
 
   onSubmit(): void {
     if (this.form.invalid) {
-      this.form.markAllAsTouched();
       return;
     }
     const { email, password } = this.form.value;
@@ -38,14 +37,8 @@ export class LoginPage implements OnInit {
     if (ok) {
       this.router.navigateByUrl('/tabs/tab1');
     } else {
-      alert('Credenciais invalidas');
+      alert('Credenciais inválidas');
     }
   }
-
-  fillDemo(): void {
-    this.form.patchValue({
-      email: 'demo@wallet.com',
-      password: '123456'
-    });
-  }
 }
+

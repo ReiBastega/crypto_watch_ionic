@@ -13,7 +13,7 @@ export class PriceService {
     .set('per_page', '50')
     .set('page', '1')
     .set('sparkline', 'false')
-    .set('price_change_percentage', '24h');
+    .set('price_change_percentage', '24h,7d,30d');
 
   private marketSubject = new BehaviorSubject<Coin[]>([]);
   readonly market$ = this.marketSubject.asObservable();

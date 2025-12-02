@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { PriceService } from '../services/price.service';
+import { AuthService } from '../services/auth.service';
 import { WalletService } from '../services/wallet.service';
 import { Coin } from '../types/coin';
 
@@ -24,7 +25,8 @@ export class Tab1Page implements OnInit, OnDestroy {
     private walletService: WalletService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -118,6 +120,11 @@ export class Tab1Page implements OnInit, OnDestroy {
     const pct = this.coins[0]?.price_change_percentage_24h ?? 0;
     if (pct <= 0) return 0;
     return Math.min(Math.max(pct / 20, 0), 1);
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.navCtrl.navigateRoot('/login');
   }
 
   private async presentToast(message: string, color: 'success' | 'warning' | 'danger'): Promise<void> {

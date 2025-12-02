@@ -9,6 +9,12 @@ export interface Coin {
   market_cap?: number;
   total_volume?: number;
   price_change_percentage_24h: number;
+  price_change_percentage_7d_in_currency?: number;
+  price_change_percentage_30d_in_currency?: number;
+  ath?: number;
+  ath_change_percentage?: number;
+  atl?: number;
+  market_cap_rank?: number;
 }
 
 export interface WalletEntry {
