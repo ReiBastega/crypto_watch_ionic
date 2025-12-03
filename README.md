@@ -9,33 +9,14 @@ Aplicativo Ionic/Angular para acompanhar mercado cripto, gerir carteira local e 
 - **Pulse (insights)**: blocos com maiores altas/quedas, tendências 7d/30d, top volume, maior market cap, mais voláteis e moedas perto do ATH.
 - **Detalhes da moeda**: preço atual, high/low 24h, market cap/volume, botão para adicionar à carteira, preço registrado na entrada e P/L calculado vs preço atual.
 
-## Stack
-- Ionic 7 / Angular
-- RxJS para stream de dados
-- CoinGecko API (endpoint `coins/markets`)
-
-## Pré-requisitos
-- Node.js 18+
-- npm 9+
-- Ionic CLI (opcional, mas recomendado): `npm install -g @ionic/cli`
-
 ## Instalação e execução
 1. Instale dependências: `npm install`
-2. Execução web (dev): `ionic serve`  
-   - Alternativa sem CLI global: `npx ionic serve`
-3. (Opcional) Build web: `npm run build`
-4. (Opcional) Android/iOS: use `ionic cap` após o build (`ionic cap copy android` / `ios`) e abra o projeto nativo pelo Android Studio/Xcode.
+2. Execução web (dev): `ionic serve`
 
 ## Configuração da API
-- Já configurado para CoinGecko sem chave (pública). Endpoint: `https://api.coingecko.com/api/v3/coins/markets` com `vs_currency=usd` e `price_change_percentage=24h,7d,30d`.
-- Se quiser usar proxy ou limitar requisições, ajuste em `src/app/services/price.service.ts`.
+- Já configurado para CoinGecko. Endpoint: `https://api.coingecko.com/api/v3/coins/markets` com `vs_currency=usd` e `price_change_percentage=24h,7d,30d`.
 
-## Scripts úteis
-- `npm start` / `ionic serve`: servidor de desenvolvimento.
-- `npm run build`: build de produção para `www/`.
-- `npm run test`: testes unitários (Karma/Jasmine, se configurado).
-
-## Estrutura relevante
+## Estrutura
 - `src/app/tab1`: mercado (lista, busca, adicionar a carteira).
 - `src/app/tab2`: carteira (posições, edit/remove, grid responsivo).
 - `src/app/tab3`: pulse/insights (tops e tendências com dados CoinGecko).
